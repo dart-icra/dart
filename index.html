@@ -40,7 +40,7 @@
                 <div class="columns is-centered">
                     <div class="column has-text-centered">
                         <h1 class="title is-1 publication-title">
-                            <span class="gradient-text">DART</span>: Learning-Enhanced Model Predictive Control for Dual-Arm Non-Prehensile Manipulation
+                           DART: Learning-Enhanced Model Predictive Control for Dual-Arm Non-Prehensile Manipulation
                         </h1>
                         <!-- <h2 class="title is-3 publication-venue">IROS 2025</h2>
 
@@ -62,20 +62,28 @@
 
                         <div class="column has-text-centered">
                             <div class="publication-links">
-                                <!-- <span class="link-block">
-                                    <a href="#" class="external-link button is-normal is-rounded is-dark">
+                                <span class="link-block">
+                                    <a href="ICRA26_3775_MS.pdf" class="external-link button is-normal is-rounded is-dark">
                                         <span class="icon">
                                             <i class="fas fa-file-pdf"></i>
                                         </span>
                                         <span>Paper</span>
                                     </a>
-                                </span> -->
+                                </span>
                                 <span class="link-block">
                                     <a href="https://github.com/dart-icra/DART-Dual-Arm-Non-Prehensile-Manipulation" class="external-link button is-normal is-rounded is-dark">
                                         <span class="icon">
                                             <i class="fab fa-github"></i>
                                         </span>
                                         <span>Code (Coming soon)</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="./static/videos/ICRA26_3775_VI_i (1).mp4" class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-file-video"></i>
+                                        </span>
+                                        <span>Video</span>
                                     </a>
                                 </span>
                             </div>
@@ -95,6 +103,121 @@
             </div>
         </div>
     </section>
+
+
+    <section class="section">
+        <div class="container is-max-desktop">
+
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered my-5">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <i>What appears effortless to a human waiter remains a major challenge for robots.</i> Manipulating objects non-prehensilely on a tray is inherently difficult,
+                        and the complexity is amplified in dual-arm settings. Such tasks are highly relevant to service robotics in domains such as hotels and hospitality, where robots must transport and reposition diverse objects with precision.
+                        We present DART, a novel dual-arm framework that integrates nonlinear Model Predictive Control (MPC) with an optimization-based impedance controller 
+                        to achieve accurate object motion relative to a dynamically controlled tray. 
+                        The framework systematically evaluates three complementary strategies for modeling tray–object dynamics as the state transition function within our MPC formulation:
+                        (i) a physics-based analytical model, (ii) an online regression-based identification model that adapts in real-time, and 
+                        (iii) a reinforcement learning–based dynamics model that generalizes across object properties. Our pipeline is validated in simulation
+                        with objects of varying mass, geometry, and friction coefficients.
+                        Extensive evaluations highlight the trade-offs among the three
+                        modeling strategies in terms of settling time, steady-state error,
+                        control effort, and generalization across objects. To the best of our knowledge, DART constitutes the first framework for 
+                        non-prehensile Dual-Arm manipulation of objects on a tray. 
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+
+            <div class="columns has-text-centered">
+                <div class="column is-full-width">
+                    <h2 class="title is-3">Architecture</h2>
+                    <img src="./static/images/DART_Framework.png">
+                    <div class="content has-text-justified my-4">
+                        <b>DART Framework:</b> Our proposed framework takes the current object state 
+                        <span>\(\mathbf{X}\)</span> and the desired target state <span>\(\mathbf{X}^{\text{ref}}\)</span>. 
+                        We choose <span>\(\boldsymbol{\nu}^{\text{ref}}\)</span> as <span>\(0^{6 \times 1}\)</span> as inputs. 
+                        These are fed into a nonlinear MPC, which computes the optimal tray-tilt commands 
+                        <span>(\(\mathbf{u}\))</span>. These commands are then passed to an optimization-based 
+                        impedance controller, which computes the torques required to realize the tilts. 
+                        Feedback from the simulator updates the object state for closing the loop for the next MPC step. 
+                        The object-tray dynamics is modeled as a state transition constraint for the MPC. 
+                        We propose three models for this state transition constraint, namely 
+                        (a) <b>PMPC</b>: an analytical physics-based dynamics model, 
+                        (b) <b>RMPC</b>: a regressor-based model which learns unmodeled dynamics, and 
+                        (c) <b>LMPC</b>: a PPO agent used to estimate the object dynamics.
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background-color: rgb(252, 252, 252);">
+        <div class="container is-max-desktop">
+            <div class="columns has-text-centered">
+                <div class="column is-full-width">
+                    <h2 class="title is-3">
+                        Additional Results <sup style="font-size: 15px;"></sup>
+                    </h2>
+
+                   
+
+                    <div class="columns is-multiline is-centered">
+                        <div class="column is-half my-5">
+                            <video autoplay loop muted poster="" preload="none"
+                                style="width:100%; border: 2px solid #ddd; border-radius: 10px;">
+                                <source src="./static/videos/mujoco_simulation_knife.mp4">
+                            </video>
+                            <h4 class="title is-5">(a) Knife</h4>
+                        </div>
+
+                        <div class="column is-half my-5">
+                            <video autoplay loop muted poster="" preload="none"
+                                style="width:100%; border: 2px solid #ddd; border-radius: 10px;">
+                                <source src="./static/videos/mujoco_simulation_teapot.mp4">
+                            </video>
+                            <h4 class="title is-5">(b) Teapot</h4>
+                        </div>
+
+                        <div class="column is-half my-5">
+                            <video autoplay loop muted poster="" preload="none"
+                                style="width:100%; border: 2px solid #ddd; border-radius: 10px;">
+                                <source src="./static/videos/mujoco_simulation_waterbottle.mp4">
+                            </video>
+                            <h4 class="title is-5">(c) Waterbottle</h4>
+                        </div>
+
+                        <div class="column is-half my-5">
+                            <video autoplay loop muted poster="" preload="none"
+                                style="width:100%; border: 2px solid #ddd; border-radius: 10px;">
+                                <source src="./static/videos/mujoco_simulation_wineglass.mp4">
+                            </video>
+                            <h4 class="title is-5">(d) Wineglass</h4>
+                        </div>
+
+                        <div class="column is-half my-5">
+                            <video autoplay loop muted poster="" preload="none"
+                                style="width:100%; border: 2px solid #ddd; border-radius: 10px;">
+                                <source src="./static/videos/mujoco_simulation_pan.mp4">
+                            </video>
+                            <h4 class="title is-5">(e) Pan</h4>
+                        </div>
+                    </div>
+
+                    <!-- footnote -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
 
     <!-- <section class="section" id="BibTeX" style="margin-bottom: 3rem;">
         <div class="container is-max-desktop content">
